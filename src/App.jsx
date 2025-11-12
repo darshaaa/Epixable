@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import MainRouter from './Routes/MainRouter.jsx'
+import MainRouter from './Router/MainRouter.jsx'
 import './App.css'
 
 

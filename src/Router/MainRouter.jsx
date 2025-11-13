@@ -1,49 +1,3 @@
-// // import React from "react";
-// // import { Route, Routes, Navigate } from "react-router-dom";
-// // import LoginPage from "../Auth/LoginPage";
-// // import RegisterPage from "../Auth/RegisterPage";
-// // import AdminDashboard from "../Admin/AdminDashboard";
-// // import KnowledgeMaterials from "../Admin/KnowledgeMaterials";
-
-// // function MainRouter() {
-// //   return (
-// //     <Routes>
-// //       {/* Default route */}
-// //       <Route path="/" element={<Navigate to="/login/admin" />} />
-
-// //       {/* Admin Routes */}
-// //        <Route path="/admindashboard" element={<AdminDashboard />} />
-// //         <Route path="/knowledge" element={<KnowledgeMaterials/>} />
-// //     </Routes>
-// //   );
-// // }
-
-// // export default MainRouter;
-// import React from "react";
-// import { Routes, Route, Navigate } from "react-router-dom";
-// import LoginPage from "../Auth/LoginPage";
-// import RegisterPage from "../Auth/RegisterPage";
-// import AdminDashboard from "../Admin/AdminDashboard";
-// import KnowledgeMaterials from "../Admin/KnowledgeMaterials";
-
-// function MainRouter() {
-//   return (
-//     <Routes>
-//       {/* Default Route */}
-//       <Route path="/" element={<Navigate to="/login/admin" replace />} />
-
-//       {/* Auth Routes */}
-//       <Route path="/login/:role" element={<LoginPage />} />
-//       <Route path="/register/:role" element={<RegisterPage />} />
-
-//       {/* Admin Routes */}
-//       <Route path="/admin/dashboard" element={<AdminDashboard />} />
-//       <Route path="/admin/materials" element={<KnowledgeMaterials />} />
-//     </Routes>
-//   );
-// }
-
-// export default MainRouter;
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "../Auth/LoginPage";
@@ -51,6 +5,11 @@ import RegisterPage from "../Auth/RegisterPage";
 import AdminDashboard from "../Admin/AdminDashboard";
 import KnowledgeMaterials from "../Admin/KnowledgeMaterials";
 import Attendance from "../Admin/Attendance";
+import Courses from "../Admin/Courses";
+import Batch from "../Admin/Batch";
+import AdminStudentCreate from "../Admin/AdminStudentCreate";
+import AdminStudentList from "../Admin/AdminStudentList";
+import AdminRecordedVideos from "../Admin/AdminRecordedVideos";
 
 function MainRouter() {
   return (
@@ -66,7 +25,11 @@ function MainRouter() {
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/materials" element={<KnowledgeMaterials />} />
       <Route path="/admin/attendance" element={<Attendance />} />
-
+      <Route path="/admin/courses" element={<Courses />} />
+      <Route path="/admin/batch" element={<Batch />} />
+      <Route path="/admin/student/create" element={<AdminStudentCreate />} />
+      <Route path="/admin/student/list" element={<AdminStudentList />} />
+      <Route path="/admin/videos" element={<AdminRecordedVideos />} />
     </Routes>
   );
 }

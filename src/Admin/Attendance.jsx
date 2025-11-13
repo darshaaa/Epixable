@@ -54,9 +54,9 @@ const Attendance = () => {
         </div>
 
         {/* 🟡 Batch Selection */}
-        <div className="bg-yellow-500 rounded-2xl shadow-md p-6 mb-8 flex justify-between items-center">
+        <div className="bg-gray-400 rounded-2xl shadow-md p-6 mb-8 flex justify-between items-center">
           <div>
-            <h3 className="text-lg font-semibold text-[#52057B]">Select Batch</h3>
+            <h3 className="text-lg font-semibold text-black">Select Batch</h3>
             <p className="text-sm text-gray-700">Choose the batch to view students</p>
           </div>
 

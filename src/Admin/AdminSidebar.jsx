@@ -1,114 +1,3 @@
-// import React, { useState } from "react";
-// import {
-//   FaHome,
-//   FaBook,
-//   FaVideo,
-//   FaUser,
-//   FaClipboardList,
-//   FaSignOutAlt,
-//   FaGraduationCap,
-//   FaUsers,
-//   FaUserGraduate,
-// } from "react-icons/fa";
-// import { useNavigate, useLocation } from "react-router-dom";
-// import logo from "../assets/LOGO.png";
-
-// const AdminSidebar = () => {
-//   const navigate = useNavigate();
-//   const location = useLocation();
-//   const [showStudentMenu, setShowStudentMenu] = useState(false);
-
-//   const menuItems = [
-//     { name: "Dashboard", icon: <FaHome />, path: "/admin/dashboard" },
-//     { name: "Knowledge Materials", icon: <FaBook />, path: "/admin/materials" },
-//     { name: "Attendance", icon: <FaClipboardList />, path: "/admin/attendance" },
-//     { name: "Recorded Videos", icon: <FaVideo />, path: "/admin/videos" },
-//     { name: "Courses", icon: <FaGraduationCap />, path: "/admin/courses" },
-//     { name: "Batch", icon: <FaUsers />, path: "/admin/batch" },
-//   ];
-
-//   return (
-//     <div className="w-64 bg-[#1B0138] text-white flex flex-col justify-between py-6 px-4 shadow-lg min-h-screen">
-//       {/* Logo */}
-//       <div>
-//         <div className="flex justify-center mb-6">
-//           <img
-//             src={logo}
-//             alt="Epixable Logo"
-//             className="w-48 h-auto object-contain"
-//           />
-//         </div>
-
-//         {/* Main Menu */}
-//         <ul className="space-y-3 mt-18">
-//           {menuItems.map((item) => (
-//             <li
-//               key={item.name}
-//               onClick={() => navigate(item.path)}
-//               className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer font-semibold transition duration-200 ${
-//                 location.pathname === item.path
-//                   ? "bg-white text-[#1B0138]"
-//                   : "hover:bg-white hover:text-[#1B0138]"
-//               }`}
-//             >
-//               {item.icon} {item.name}
-//             </li>
-//           ))}
-
-//           {/* Student Dropdown */}
-//           <li
-//             className={`p-3 rounded-xl cursor-pointer font-semibold transition duration-200 ${
-//               location.pathname.includes("/admin/student")
-//                 ? "bg-white text-[#1B0138]"
-//                 : "hover:bg-white hover:text-[#1B0138]"
-//             }`}
-//             onClick={() => setShowStudentMenu(!showStudentMenu)}
-//           >
-//             <div className="flex items-center gap-3">
-//               <FaUserGraduate /> Student
-//             </div>
-
-//             {/* Dropdown Submenu */}
-//             {showStudentMenu && (
-//               <ul className="mt-2 ml-6 space-y-2 text-sm">
-//                 <li
-//                   onClick={() => navigate("/admin/student/create")}
-//                   className={`block px-2 py-2 rounded-lg cursor-pointer ${
-//                     location.pathname === "/admin/student/create"
-//                       ? "bg-white text-[#1B0138]"
-//                       : "hover:bg-white hover:text-[#1B0138]"
-//                   }`}
-//                 >
-//                   ➤ Create New
-//                 </li>
-//                 <li
-//                   onClick={() => navigate("/admin/student/list")}
-//                   className={`block px-2 py-2 rounded-lg cursor-pointer ${
-//                     location.pathname === "/admin/student/list"
-//                       ? "bg-white text-[#1B0138]"
-//                       : "hover:bg-white hover:text-[#1B0138]"
-//                   }`}
-//                 >
-//                   ➤ List
-//                 </li>
-//               </ul>
-//             )}
-//           </li>
-//         </ul>
-//       </div>
-
-//       {/* Logout */}
-//       <div
-//         onClick={() => navigate("/login/admin")}
-//         className="flex items-center gap-3 p-3 rounded-xl hover:bg-white hover:text-[#1B0138] cursor-pointer transition duration-200"
-//       >
-//         <FaSignOutAlt /> Logout
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdminSidebar;
 import React, { useState } from "react";
 import {
   FaHome,
@@ -137,6 +26,8 @@ const AdminSidebar = () => {
     { name: "Recorded Videos", icon: <FaVideo />, path: "/admin/videos" },
     { name: "Courses", icon: <FaGraduationCap />, path: "/admin/courses" },
     { name: "Batch", icon: <FaUsers />, path: "/admin/batch" },
+    { name: "Module", icon: <FaClipboardList />, path: "/admin/module" },
+
   ];
 
   return (

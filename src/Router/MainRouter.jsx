@@ -10,6 +10,7 @@ import Batch from "../Admin/Batch";
 import AdminStudentCreate from "../Admin/AdminStudentCreate";
 import AdminStudentList from "../Admin/AdminStudentList";
 import AdminRecordedVideos from "../Admin/AdminRecordedVideos";
+import Module from "../Admin/Module";
 
 function MainRouter() {
   return (
@@ -30,6 +31,7 @@ function MainRouter() {
       <Route path="/admin/student/create" element={<AdminStudentCreate />} />
       <Route path="/admin/student/list" element={<AdminStudentList />} />
       <Route path="/admin/videos" element={<AdminRecordedVideos />} />
+      <Route path="/admin/module" element={<Module />} />
     </Routes>
   );
 }

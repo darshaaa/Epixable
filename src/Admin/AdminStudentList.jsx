@@ -148,9 +148,9 @@ const AdminStudentList = () => {
           </h1>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-500">
+        <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] p-6 rounded-2xl shadow-xl">
           {/* Add Student Button (New Feature) */}
-          <div className="flex justify-between items-center mb-4 border-b pb-3">
+          <div className="flex justify-between items-center mb-4  pb-3">
             <h2 className="text-xl font-semibold text-gray-800">
               All Students ({students.length})
             </h2>
@@ -163,7 +163,7 @@ const AdminStudentList = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full border-collapse ">
               <thead className="sticky top-0 bg-[#1B0138] text-white z-10 shadow-md">
                 <tr>
                   {[

@@ -294,7 +294,7 @@ const Attendance = () => {
             )}
           </AnimatePresence>
 
-          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border-1 border-[#52057B]">
+          <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] rounded-2xl p-6 sm:p-8 shadow-xl ">
             {/* Select batch */}
             <div className="flex justify-start mb-6">
               <button

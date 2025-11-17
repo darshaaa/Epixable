@@ -137,7 +137,7 @@ const Courses = () => {
         </div>
 
         <div className="mt-12">
-          <div className="bg-white p-6 rounded-xl shadow-inner border-1 border-[#52057B]">
+          <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] p-6 rounded-xl shadow-inner ">
             <div className="flex justify-between items-center mb-10">
               <button
                 onClick={() => setShowForm(true)}

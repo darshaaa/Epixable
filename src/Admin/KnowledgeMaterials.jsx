@@ -70,9 +70,9 @@ const KnowledgeMaterials = () => {
     <div className="flex min-h-screen bg-white relative overflow-hidden">
       <AdminSidebar />
 
-      <div className="flex-1 min-h-screen p-8">
+      <div className="flex-1 min-h-screen p-8 ">
         {/* Page Header with Logo */}
-        <div className="mb-6 flex items-center gap-4 mt-8">
+        <div className="mb-6 flex items-center gap-4 mt-8 ">
           <div className="bg-[#1B0138] p-3 rounded-xl text-white inline-flex items-center justify-center">
             <FaBook size={20} />
           </div>
@@ -82,7 +82,7 @@ const KnowledgeMaterials = () => {
         </div>
 
         {/* Upload & Search Section */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm relative mt-15 border border-gray-500">
+        <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] rounded-2xl p-8 shadow-sm relative mt-15 border border-gray-100">
 
           <div className="flex justify-between items-center mb-8">
             <input
@@ -109,8 +109,6 @@ const KnowledgeMaterials = () => {
                 className="w-full bg-[#e3ece8]  rounded-full pl-10 pr-4 py-2 text-sm outline-none placeholder:text-gray-500"
               />
             </div>
-
-            <div className="w-36"></div>
           </div>
 
           <div className="grid grid-cols-4 font-bold text-black border-b border-gray-400 pb-3 mb-2 pl-10">

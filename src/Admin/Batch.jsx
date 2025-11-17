@@ -197,12 +197,12 @@ const Batch = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-500 font-poppins">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
+        <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] p-4 rounded-xl shadow-lg border border-gray-100 font-poppins">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4 pb-2">
             Active Batches
           </h2>
 
-          <div className="grid grid-cols-12 text-sm font-semibold text-gray-500 border-b pb-3 mb-3 sticky top-0 bg-white z-10">
+          <div className="grid grid-cols-12 text-sm font-semibold text-gray-500 border-b pb-3 mb-3 sticky top-0  z-10">
             <span className="col-span-2">Batch No</span>
             <span className="col-span-3">Batch Name </span>
             <span className="col-span-3">Course</span>

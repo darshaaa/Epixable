@@ -99,14 +99,14 @@ const KnowledgeMaterials = () => {
               + Upload Files
             </button>
 
-            <div className="relative w-80 mx-auto">
+            <div className="relative w-80 ml-auto">
               <FaSearch className="absolute left-4 top-3 text-gray-500" />
               <input
                 type="text"
                 placeholder="Search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-[#f1f1f1]  rounded-full pl-10 pr-4 py-2 text-sm outline-none placeholder:text-gray-500"
+                className="w-full bg-[#e3ece8]  rounded-full pl-10 pr-4 py-2 text-sm outline-none placeholder:text-gray-500"
               />
             </div>
 

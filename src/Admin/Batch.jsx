@@ -39,7 +39,8 @@ const Batch = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [editingBatch, setEditingBatch] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(""); // New state for search
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [batchData, setBatchData] = useState({
     batchNo: "",
     batchName: "",
@@ -100,7 +101,7 @@ const Batch = () => {
     setBatchData({
       batchNo: "",
       batchName: "",
-      batchTitle: "", // Cleared batchTitle as well
+      batchTitle: "",
       course: "",
       startTime: "",
       endTime: "",
@@ -128,7 +129,6 @@ const Batch = () => {
     }
   };
 
-  // Logic for filtering batches based on search term
   const filteredBatches = batches.filter((batch) =>
     Object.values(batch).some(
       (value) =>
@@ -142,7 +142,6 @@ const Batch = () => {
       <AdminSidebar />
 
       <div className="flex-1 p-8 relative overflow-hidden">
-        {/* Page Header with Icon */}
         <div className="flex items-center gap-3 mb-6 mt-10">
           <span className="text-3xl bg-[#1B0138] text-white p-3 rounded-xl">
             🎓
@@ -151,8 +150,7 @@ const Batch = () => {
             Batch Management
           </h1>
         </div>
-        
-        {/* Row for Create Batch Button and Search Bar */}
+
         <div className="flex justify-between items-center mb-10">
           <button
             onClick={() => {
@@ -176,14 +174,13 @@ const Batch = () => {
             Create New Batch
           </button>
 
-          {/* Search Bar */}
-          <div className="relative w-full max-w-xs">
+          <div className="relative w-60 max-w-xs">
             <input
               type="text"
-              placeholder="Search Batches..."
+              placeholder="Search Batches.."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-3 pl-12 border border-gray-300 rounded-xl focus:ring-[#1B0138] focus:border-[#1B0138] bg-white transition duration-150 shadow-sm"
+              className="w-full h-8 p-3 pl-12 border border-gray-300 rounded-xl focus:ring-[#1B0138] focus:border-[#1B0138] bg-white transition duration-150 shadow-sm"
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +196,6 @@ const Batch = () => {
             </svg>
           </div>
         </div>
-
 
         <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-500 font-poppins">
           <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
@@ -267,10 +263,10 @@ const Batch = () => {
           )}
         </div>
 
-        {/* Popup Form */}
+        {/* POPUP – NOW SLIDES FROM RIGHT */}
         {showForm && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 font-poppins">
-            <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-xl animate-slideUp relative border-t-4 border-[#1B0138]">
+            <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-xl animate-slideFromRight relative border-t-4 border-[#1B0138]">
               <h2 className="text-2xl font-bold text-[#1B0138] text-center mb-6 border-b pb-3">
                 {editingBatch ? "Edit Batch Details" : "Create New Batch"}
               </h2>
@@ -311,6 +307,7 @@ const Batch = () => {
                       }
                     />
                   </div>
+
                   <div className="col-span-1">
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Batch Name
@@ -325,9 +322,10 @@ const Batch = () => {
                       }
                     />
                   </div>
+
                   <div className="col-span-2">
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
-                      Batch Title (Short Description)
+                      Batch Title
                     </label>
                     <input
                       type="text"
@@ -342,6 +340,7 @@ const Batch = () => {
                       }
                     />
                   </div>
+
                   <div className="col-span-2 mb-4">
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
                       Assigned Course
@@ -410,7 +409,6 @@ const Batch = () => {
                       setShowForm(false);
                       setEditingBatch(null);
                       setBatchData({
-                        // Reset form on cancel
                         batchNo: "",
                         batchName: "",
                         batchTitle: "",
@@ -438,14 +436,14 @@ const Batch = () => {
         <style>{`
           .font-poppins { font-family: 'Poppins', sans-serif; }
 
-          @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+          @keyframes slideFromRight {
+            from { transform: translateX(200px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
           }
-          .animate-slideUp {
-            animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+          .animate-slideFromRight {
+            animation: slideFromRight 0.6s ease-out forwards;
           }
-          
+
           @keyframes fadeInDelayed {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }

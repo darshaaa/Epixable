@@ -28,8 +28,7 @@ function MainRouter() {
       <Route path="/admin/attendance" element={<Attendance />} />
       <Route path="/admin/courses" element={<Courses />} />
       <Route path="/admin/batch" element={<Batch />} />
-      {/* <Route path="/admin/student/create" element={<AdminStudentCreate />} /> */}
-      <Route path="/admin/student/list" element={<AdminStudentList />} />
+      <Route path="/admin/list" element={<AdminStudentList />} />
       <Route path="/admin/videos" element={<AdminRecordedVideos />} />
       <Route path="/admin/module" element={<Module />} />
     </Routes>

@@ -78,7 +78,7 @@ const Courses = () => {
   const [showOverview, setShowOverview] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [closing, setClosing] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [newCourse, setNewCourse] = useState({
     name: "",
@@ -115,11 +115,10 @@ const Courses = () => {
     setTimeout(() => {
       setter(false);
       setClosing(false);
-      setSelectedCourse(null); // Clear selected course
+      setSelectedCourse(null);
     }, 400);
   };
 
-  // Filter courses based on search term
   const filteredCourses = courses.filter((course) =>
     course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     course.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -139,7 +138,6 @@ const Courses = () => {
 
         <div className="mt-12">
           <div className="bg-white p-6 rounded-xl shadow-inner border-1 border-[#52057B]">
-            {/* Control Row: Create Button and Search Bar */}
             <div className="flex justify-between items-center mb-10">
               <button
                 onClick={() => setShowForm(true)}
@@ -147,14 +145,14 @@ const Courses = () => {
               >
                 ➕ Create Course
               </button>
-              {/* Search Bar Implementation */}
-              <div className="relative w-full max-w-sm">
+
+              <div className="relative w-60 max-w-sm">
                 <input
                   type="text"
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full p-3 pl-12 border border-gray-300 rounded-xl focus:ring-[#1B0138] focus:border-[#1B0138] bg-white transition duration-150 shadow-sm"
+                  className="w-full h-8 p-3 pl-12 border border-gray-300 rounded-xl focus:ring-[#1B0138] focus:border-[#1B0138] bg-white transition duration-150 shadow-sm"
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -229,33 +227,54 @@ const Courses = () => {
           </div>
         </div>
 
-        {/* Course Overview Modal */}
+        {/* POPUP SLIDES FROM RIGHT */}
         {showOverview && selectedCourse && (
           <>
-            <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" onClick={() => closeModal(setShowOverview)}></div>
-            <div className="fixed inset-0 flex items-start justify-center z-50 pt-20">
+            <div
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+              onClick={() => closeModal(setShowOverview)}
+            ></div>
+
+            <div className="fixed inset-0 flex justify-end items-start z-50 pt-20">
               <div
-                className={`bg-white rounded-2xl shadow-2xl p-8 w-11/12 md:w-2/3 lg:w-1/2 transition-transform duration-400 ease-in-out ${
-                  closing ? "-translate-y-96 opacity-0" : "translate-y-0 opacity-100"
+                className={`bg-white rounded-l-2xl shadow-2xl p-8 w-full sm:w-2/3 md:w-1/2 lg:w-1/3 transition-transform duration-300 ease-in-out ${
+                  closing
+                    ? "translate-x-full opacity-0"
+                    : "translate-x-0 opacity-100"
                 }`}
               >
                 <div className="flex gap-4 items-center mb-4">
                   <span className="text-3xl">{selectedCourse.icon}</span>
                   <h2 className="text-2xl font-bold">{selectedCourse.name}</h2>
                 </div>
-                <p className="mb-4 text-gray-700">{selectedCourse.description}</p>
+
+                <p className="mb-4 text-gray-700">
+                  {selectedCourse.description}
+                </p>
+
                 <p className="mb-2 font-semibold">
-                  Duration: <span className="font-normal">{selectedCourse.duration}</span>
+                  Duration:{" "}
+                  <span className="font-normal">
+                    {selectedCourse.duration}
+                  </span>
                 </p>
+
                 <p className="mb-4 font-semibold">
-                  Students Enrolled: <span className="font-normal">{selectedCourse.students}</span>
+                  Students Enrolled:{" "}
+                  <span className="font-normal">
+                    {selectedCourse.students}
+                  </span>
                 </p>
-                <h3 className="text-lg font-bold mb-2 text-[#1B0138]">Key Topics:</h3>
+
+                <h3 className="text-lg font-bold mb-2 text-[#1B0138]">
+                  Key Topics:
+                </h3>
                 <ul className="list-disc pl-5 space-y-1 mb-6 text-gray-700">
                   {selectedCourse.details.map((detail, i) => (
                     <li key={i}>{detail}</li>
                   ))}
                 </ul>
+
                 <button
                   onClick={() => closeModal(setShowOverview)}
                   className="bg-[#1B0138] text-white font-bold px-6 py-3 rounded-xl shadow-md hover:bg-[#30015f] transition w-full"
@@ -267,14 +286,20 @@ const Courses = () => {
           </>
         )}
 
-        {/* ✅ CREATE COURSE MODAL (Added) */}
+        {/* CREATE COURSE FORM - SLIDE FROM RIGHT */}
         {showForm && (
           <>
-            <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" onClick={() => closeModal(setShowForm)}></div>
-            <div className="fixed inset-0 bg-black/40 flex items-start justify-center pt-20 z-50">
+            <div
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+              onClick={() => closeModal(setShowForm)}
+            ></div>
+
+            <div className="fixed inset-0 flex justify-end items-start pt-20 z-50">
               <div
-                className={`bg-white rounded-2xl shadow-2xl p-8 w-11/12 md:w-2/3 lg:w-1/2 transition-all duration-300 ${
-                  closing ? "scale-90 opacity-0" : "scale-100 opacity-100"
+                className={`bg-white rounded-l-2xl shadow-2xl p-8 w-full sm:w-2/3 md:w-1/2 lg:w-1/3 transition-transform duration-300 ${
+                  closing
+                    ? "translate-x-full opacity-0"
+                    : "translate-x-0 opacity-100"
                 }`}
               >
                 <h2 className="text-2xl font-bold mb-4 text-[#1B0138]">
@@ -283,7 +308,9 @@ const Courses = () => {
 
                 <form onSubmit={handleAddCourse} className="space-y-4">
                   <div>
-                    <label className="block font-semibold mb-1">Course Name</label>
+                    <label className="block font-semibold mb-1">
+                      Course Name
+                    </label>
                     <input
                       type="text"
                       value={newCourse.name}
@@ -296,7 +323,9 @@ const Courses = () => {
                   </div>
 
                   <div>
-                    <label className="block font-semibold mb-1">Description</label>
+                    <label className="block font-semibold mb-1">
+                      Description
+                    </label>
                     <textarea
                       value={newCourse.description}
                       onChange={(e) =>

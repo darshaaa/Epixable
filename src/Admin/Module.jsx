@@ -74,18 +74,16 @@ const Module = () => {
       <AdminSidebar />
 
       <div className="flex-1 p-8 md:p-12 bg-gray-50 overflow-y-auto h-screen">
-        {/* Header */}
         <h1 className="text-4xl font-extrabold text-[#1B0138] mb-10 border-b pb-4">
           🎓 Course Modules
         </h1>
 
-        {/* Top Controls */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 10px 15px -3px rgba(27, 1, 56, 0.3)" }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowCreatePopup(true)}
-            className="flex items-center gap-2 bg-[#1B0138] text-white px-8 py-3 rounded-xl shadow-xl font-semibold transition-all duration-300 transform hover:bg-[#2A055A]"
+            className="flex items-center gap-2 bg-[#1B0138] text-white px-8 py-3 rounded-xl shadow-xl font-semibold transition-all"
           >
             <FaPlus /> Create New Module
           </motion.button>
@@ -94,28 +92,28 @@ const Module = () => {
             <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
               type="text"
-              placeholder="Search module name or course..."
+              placeholder="Search module.."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full p-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1B0138] focus:border-[#1B0138] transition shadow-md"
+              className="w-60 h-8 p-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1B0138] shadow-md"
             />
           </div>
         </div>
 
-        {/* Module Cards Grid */}
+        {/* Module Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredModules.map((module) => (
             <motion.div
               key={module.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
+              whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
               onClick={() => {
                 setSelectedModule(module);
                 setShowDetailPopup(true);
               }}
-              className="bg-white p-6 rounded-3xl shadow-lg border border-gray-500 cursor-pointer transition-all duration-300 flex flex-col justify-between h-full transform hover:shadow-xl hover:border-[#1B0138]"
+              className="bg-white p-6 rounded-3xl shadow-lg border border-gray-500 cursor-pointer hover:border-[#1B0138]"
             >
               <div className="flex-grow">
                 <div className="bg-[#1B0138] text-white p-3 rounded-xl inline-block mb-4 shadow-lg">
@@ -129,7 +127,7 @@ const Module = () => {
 
               <div className="space-y-2 pt-4 border-t border-gray-100">
                 <p className="text-sm text-gray-700 flex items-center gap-2">
-                  <FaLayerGroup className="text-purple-500" /> 
+                  <FaLayerGroup className="text-purple-500" />
                   <span className="font-semibold">Course:</span> {module.course}
                 </p>
                 <p className="text-sm text-gray-700 flex items-center gap-2">
@@ -150,26 +148,26 @@ const Module = () => {
           )}
         </div>
 
-        {/* Create Popup */}
+        {/* CREATE POPUP — RIGHT SLIDE */}
         <AnimatePresence>
           {showCreatePopup && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 flex justify-center items-center p-4 backdrop-blur-sm z-50"
+              className="fixed inset-0 bg-black/60 flex justify-end items-center p-4 backdrop-blur-sm z-50"
             >
               <motion.div
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -50, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                initial={{ x: 300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 300, opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 className="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-100"
               >
                 <div className="flex justify-between items-center mb-6 border-b pb-3">
                   <h2 className="text-3xl font-extrabold text-[#1B0138]">Add New Module</h2>
                   <FaTimes
-                    className="cursor-pointer text-gray-500 hover:text-red-500 transition"
+                    className="cursor-pointer text-gray-500 hover:text-red-500"
                     onClick={() => setShowCreatePopup(false)}
                     size={20}
                   />
@@ -179,12 +177,13 @@ const Module = () => {
                   <input
                     type="text"
                     placeholder="Module Name"
-                    className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition"
+                    className="w-full p-4 border rounded-xl"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
+
                   <select
-                    className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition bg-white appearance-none"
+                    className="w-full p-4 border rounded-xl bg-white"
                     value={course}
                     onChange={(e) => setCourse(e.target.value)}
                   >
@@ -194,8 +193,9 @@ const Module = () => {
                     <option>Python</option>
                     <option>Graphic Design</option>
                   </select>
+
                   <select
-                    className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition bg-white appearance-none"
+                    className="w-full p-4 border rounded-xl bg-white"
                     value={batch}
                     onChange={(e) => setBatch(e.target.value)}
                   >
@@ -204,48 +204,47 @@ const Module = () => {
                     <option>Batch B</option>
                     <option>Batch C</option>
                   </select>
+
                   <textarea
                     placeholder="Description"
                     rows={4}
-                    className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition"
+                    className="w-full p-4 border rounded-xl"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
 
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                  <button
                     onClick={handleSubmit}
-                    className="w-full bg-green-600 text-white p-4 rounded-xl font-bold text-lg shadow-md hover:bg-green-700 transition"
+                    className="w-full bg-green-600 text-white p-4 rounded-xl font-bold text-lg shadow-md"
                   >
                     Submit Module
-                  </motion.button>
+                  </button>
                 </div>
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Detail Popup */}
+        {/* DETAIL POPUP — RIGHT SLIDE */}
         <AnimatePresence>
           {showDetailPopup && selectedModule && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 flex justify-center items-center p-4 backdrop-blur-sm z-50"
+              className="fixed inset-0 bg-black/60 flex justify-end items-center p-4 backdrop-blur-sm z-50"
             >
               <motion.div
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -50, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                initial={{ x: 300, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 300, opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 className="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-100"
               >
                 <div className="flex justify-between items-center mb-6 border-b pb-3">
                   <h2 className="text-3xl font-extrabold text-[#1B0138]">Module Details</h2>
                   <FaTimes
-                    className="cursor-pointer text-gray-500 hover:text-red-500 transition"
+                    className="cursor-pointer text-gray-500 hover:text-red-500"
                     onClick={() => setShowDetailPopup(false)}
                     size={20}
                   />
@@ -254,31 +253,33 @@ const Module = () => {
                 <div className="space-y-4 text-gray-700">
                   <p className="text-2xl font-bold text-[#1B0138]">{selectedModule.name}</p>
                   <p className="border-b pb-4 text-gray-600 italic">{selectedModule.description}</p>
+
                   <p className="flex items-center gap-2">
                     <FaLayerGroup className="text-purple-500" />
                     <b>Course:</b> {selectedModule.course}
                   </p>
+
                   <p className="flex items-center gap-2">
                     <FaCalendarAlt className="text-pink-500" />
                     <b>Batch:</b> {selectedModule.batch}
                   </p>
+
                   <p className="text-sm text-gray-500 pt-2 border-t">
                     <b>Created At:</b> {selectedModule.createdAt}
                   </p>
                 </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={() => deleteModule(selectedModule.id)}
-                  className="mt-8 w-full bg-red-600 text-white p-4 rounded-xl font-bold text-lg shadow-md hover:bg-red-700 transition"
+                  className="mt-8 w-full bg-red-600 text-white p-4 rounded-xl font-bold text-lg shadow-md"
                 >
                   <FaTimes className="inline-block mr-2" /> Delete Module
-                </motion.button>
+                </button>
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
+
       </div>
     </div>
   );

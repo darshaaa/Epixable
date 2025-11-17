@@ -70,10 +70,10 @@ const Module = () => {
   );
 
   return (
-    <div className="flex min-h-screen font-poppins bg-[#F5F6FA]">
+    <div className="flex min-h-screen font-poppins bg-[#F5F6FA] overflow-hidden">
       <AdminSidebar />
 
-      <div className="flex-1 p-8 md:p-12 bg-gray-50 min-h-screen">
+      <div className="flex-1 p-8 md:p-12 bg-gray-50 overflow-y-auto h-screen">
         {/* Header */}
         <h1 className="text-4xl font-extrabold text-[#1B0138] mb-10 border-b pb-4">
           🎓 Course Modules

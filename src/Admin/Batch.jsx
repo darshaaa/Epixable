@@ -39,6 +39,7 @@ const Batch = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [editingBatch, setEditingBatch] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(""); // New state for search
   const [batchData, setBatchData] = useState({
     batchNo: "",
     batchName: "",
@@ -99,7 +100,7 @@ const Batch = () => {
     setBatchData({
       batchNo: "",
       batchName: "",
-      batchTitle: "",
+      batchTitle: "", // Cleared batchTitle as well
       course: "",
       startTime: "",
       endTime: "",
@@ -127,6 +128,15 @@ const Batch = () => {
     }
   };
 
+  // Logic for filtering batches based on search term
+  const filteredBatches = batches.filter((batch) =>
+    Object.values(batch).some(
+      (value) =>
+        typeof value === "string" &&
+        value.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
   return (
     <div className="flex min-h-screen bg-[#F7F7F7] font-poppins">
       <AdminSidebar />
@@ -141,28 +151,55 @@ const Batch = () => {
             Batch Management
           </h1>
         </div>
-
-        <button
-          onClick={() => {
-            if (editingBatch) setEditingBatch(null);
-            setShowForm(true);
-          }}
-          className="flex items-center bg-[#1B0138] text-white px-6 py-3 rounded-xl mb-10 hover:bg-[#3a006b] transition-all shadow-lg font-poppins"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+        
+        {/* Row for Create Batch Button and Search Bar */}
+        <div className="flex justify-between items-center mb-10">
+          <button
+            onClick={() => {
+              if (editingBatch) setEditingBatch(null);
+              setShowForm(true);
+            }}
+            className="flex items-center bg-[#1B0138] text-white px-6 py-3 rounded-xl hover:bg-[#3a006b] transition-all shadow-lg font-poppins"
           >
-            <path
-              fillRule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clipRule="evenodd"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Create New Batch
+          </button>
+
+          {/* Search Bar */}
+          <div className="relative w-full max-w-xs">
+            <input
+              type="text"
+              placeholder="Search Batches..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full p-3 pl-12 border border-gray-300 rounded-xl focus:ring-[#1B0138] focus:border-[#1B0138] bg-white transition duration-150 shadow-sm"
             />
-          </svg>
-          Create New Batch
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+
 
         <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-500 font-poppins">
           <h2 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">
@@ -171,19 +208,21 @@ const Batch = () => {
 
           <div className="grid grid-cols-12 text-sm font-semibold text-gray-500 border-b pb-3 mb-3 sticky top-0 bg-white z-10">
             <span className="col-span-2">Batch No</span>
-            <span className="col-span-3">Batch Name / Title</span>
+            <span className="col-span-3">Batch Name </span>
             <span className="col-span-3">Course</span>
             <span className="col-span-2">Timing</span>
             <span className="col-span-2 text-center">Actions</span>
           </div>
 
-          {batches.length === 0 ? (
+          {filteredBatches.length === 0 ? (
             <p className="text-center py-8 text-gray-500">
-              No batches created yet. Click 'Create New Batch' to start.
+              {searchTerm
+                ? `No batches found for "${searchTerm}".`
+                : "No batches created yet. Click 'Create New Batch' to start."}
             </p>
           ) : (
             <div className="space-y-3">
-              {batches.map((batch, index) => (
+              {filteredBatches.map((batch, index) => (
                 <div
                   key={batch.id}
                   className={`grid grid-cols-12 items-center p-3 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-[1.01] animate-fadeIn-delayed`}
@@ -288,15 +327,18 @@ const Batch = () => {
                   </div>
                   <div className="col-span-2">
                     <label className="block text-sm font-semibold text-gray-700 mb-1">
-                      Batch Title
+                      Batch Title (Short Description)
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g., Advanced React Workshop"
+                      placeholder="e.g., Advanced Development"
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-[#1B0138] focus:border-[#1B0138] bg-gray-50 transition duration-150"
                       value={batchData.batchTitle}
                       onChange={(e) =>
-                        setBatchData({ ...batchData, batchTitle: e.target.value })
+                        setBatchData({
+                          ...batchData,
+                          batchTitle: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -367,6 +409,15 @@ const Batch = () => {
                     onClick={() => {
                       setShowForm(false);
                       setEditingBatch(null);
+                      setBatchData({
+                        // Reset form on cancel
+                        batchNo: "",
+                        batchName: "",
+                        batchTitle: "",
+                        course: "",
+                        startTime: "",
+                        endTime: "",
+                      });
                     }}
                     className="px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition duration-150 font-medium"
                   >

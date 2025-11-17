@@ -7,7 +7,7 @@ import KnowledgeMaterials from "../Admin/KnowledgeMaterials";
 import Attendance from "../Admin/Attendance";
 import Courses from "../Admin/Courses";
 import Batch from "../Admin/Batch";
-import AdminStudentCreate from "../Admin/AdminStudentCreate";
+// import AdminStudentCreate from "../Admin/AdminStudentCreate";
 import AdminStudentList from "../Admin/AdminStudentList";
 import AdminRecordedVideos from "../Admin/AdminRecordedVideos";
 import Module from "../Admin/Module";
@@ -28,7 +28,7 @@ function MainRouter() {
       <Route path="/admin/attendance" element={<Attendance />} />
       <Route path="/admin/courses" element={<Courses />} />
       <Route path="/admin/batch" element={<Batch />} />
-      <Route path="/admin/student/create" element={<AdminStudentCreate />} />
+      {/* <Route path="/admin/student/create" element={<AdminStudentCreate />} /> */}
       <Route path="/admin/student/list" element={<AdminStudentList />} />
       <Route path="/admin/videos" element={<AdminRecordedVideos />} />
       <Route path="/admin/module" element={<Module />} />

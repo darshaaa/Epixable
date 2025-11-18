@@ -27,6 +27,10 @@ const AdminStudentList = () => {
     },
   ]);
 
+  // --- Search & Date Filter State ---
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+
   // --- Modals and Form States ---
   const [editStudent, setEditStudent] = useState(null); // For Edit Popup
   const [formData, setFormData] = useState({}); // For Edit Form
@@ -79,15 +83,15 @@ const AdminStudentList = () => {
       email: newStudentData.email,
       course: newStudentData.course,
       batch: newStudentData.batch,
-      expiry: newStudentData.endDate || new Date().toISOString().split("T")[0], // Use endDate as expiry or today
-      status: "Active", // Default status for new students
+      expiry: newStudentData.endDate || new Date().toISOString().split("T")[0],
+      status: "Active",
     };
 
     setStudents([...students, newStudent]);
     alert("Student Registered Successfully ✅");
     setShowCreatePopup(false);
 
-    // Reset create form data
+    // Reset form
     setNewStudentData({
       fullName: "",
       gender: "",
@@ -123,7 +127,7 @@ const AdminStudentList = () => {
     closePopup();
   };
 
-  // Utility to close modals with animation (copied from original AdminStudentCreate)
+  // Utility to close modals with animation
   const closeModal = (setter) => {
     document
       .getElementById("modal-content")
@@ -132,6 +136,20 @@ const AdminStudentList = () => {
       setter(false);
     }, 300); // Match animation duration
   };
+
+  // --- SEARCH + DATE FILTER LOGIC ---
+  const filteredStudents = students.filter((s) => {
+    const matchSearch =
+      s.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.mobile.includes(searchQuery) ||
+      s.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.course.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.batch.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchDate = filterDate ? s.expiry === filterDate : true;
+
+    return matchSearch && matchDate;
+  });
 
   return (
     <div className="flex min-h-screen bg-[#F7F7F7] font-poppins">
@@ -149,19 +167,41 @@ const AdminStudentList = () => {
         </div>
 
         <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] p-6 rounded-2xl shadow-xl">
-          {/* Add Student Button (New Feature) */}
-          <div className="flex justify-between items-center mb-4  pb-3">
+          {/* TOP BAR (Search + Date Filter + Add Student) */}
+          <div className="flex justify-between items-center mb-4 pb-3">
             <h2 className="text-xl font-semibold text-gray-800">
-              All Students ({students.length})
+              All Students ({filteredStudents.length})
             </h2>
-            <button
-              onClick={() => setShowCreatePopup(true)}
-              className="flex items-center gap-2 bg-[#1B0138] text-white px-5 py-2 rounded-xl shadow-md hover:bg-[#3A0070] transition font-semibold"
-            >
-              <FaPlus /> Add Student
-            </button>
+
+            <div className="flex gap-3">
+              {/* Search */}
+              <input
+                type="text"
+                placeholder="Search student..."
+                className="p-2 rounded-lg border border-gray-300 shadow-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+
+              {/* Date Picker */}
+              <input
+                type="date"
+                className="p-2 rounded-lg border border-gray-300 shadow-sm"
+                value={filterDate}
+                onChange={(e) => setFilterDate(e.target.value)}
+              />
+
+              {/* Add Student Button */}
+              <button
+                onClick={() => setShowCreatePopup(true)}
+                className="flex items-center gap-2 bg-[#1B0138] text-white px-5 py-2 rounded-xl shadow-md hover:bg-[#3A0070] transition font-semibold"
+              >
+                <FaPlus /> Add Student
+              </button>
+            </div>
           </div>
 
+          {/* STUDENT TABLE */}
           <div className="overflow-x-auto">
             <table className="w-full border-collapse ">
               <thead className="sticky top-0 bg-[#1B0138] text-white z-10 shadow-md">
@@ -187,7 +227,7 @@ const AdminStudentList = () => {
               </thead>
 
               <tbody>
-                {students.map((student, index) => (
+                {filteredStudents.map((student, index) => (
                   <tr
                     key={student.id}
                     className="bg-white border-b hover:shadow-lg hover:scale-[1.01] transition-all duration-300"
@@ -212,7 +252,6 @@ const AdminStudentList = () => {
                           student.status === "Active"
                             ? "bg-green-600"
                             : "bg-orange-500"
-                            
                         }`}
                       >
                         {student.status}
@@ -233,7 +272,7 @@ const AdminStudentList = () => {
           </div>
         </div>
 
-        {/* --- EDIT POPUP (Existing) --- */}
+        {/* --- EDIT POPUP (UNCHANGED) --- */}
         {editStudent && (
           <div className="fixed inset-0 bg-black/60 flex justify-center items-start pt-20 backdrop-blur-sm z-50 p-4">
             <div
@@ -299,11 +338,11 @@ const AdminStudentList = () => {
           </div>
         )}
 
-        {/* --- CREATE STUDENT POPUP (New) --- */}
+        {/* --------------- CREATE POPUP (FULL RESTORED + UNCHANGED) --------------- */}
         {showCreatePopup && (
           <div className="fixed inset-0 bg-black/60 flex justify-center items-start pt-10 backdrop-blur-sm z-50 p-4 overflow-y-auto">
             <div
-              id="modal-content" // Added ID for animation utility
+              id="modal-content"
               className="bg-white w-full max-w-3xl p-8 my-10 rounded-2xl shadow-2xl border border-purple-200 transition-all duration-300 translate-y-0 opacity-100"
             >
               <div className="flex justify-between items-center mb-6 border-b pb-4">
@@ -331,11 +370,12 @@ const AdminStudentList = () => {
                 </button>
               </div>
 
+              {/* --- FULL REGISTRATION FORM (UNCHANGED) --- */}
               <form
                 onSubmit={handleCreateSubmit}
                 className="grid grid-cols-2 gap-6"
               >
-                {/* Row 1: Full Name & Gender */}
+                {/* Full Name */}
                 <div>
                   <label className="block font-semibold mb-1">
                     Full Name *
@@ -349,6 +389,8 @@ const AdminStudentList = () => {
                     placeholder="Enter full name"
                   />
                 </div>
+
+                {/* Gender */}
                 <div>
                   <label className="block font-semibold mb-1">Gender</label>
                   <select
@@ -364,7 +406,7 @@ const AdminStudentList = () => {
                   </select>
                 </div>
 
-                {/* Row 2: Mobile & Email */}
+                {/* Mobile */}
                 <div>
                   <label className="block font-semibold mb-1">
                     Mobile Number
@@ -378,6 +420,8 @@ const AdminStudentList = () => {
                     placeholder="Enter mobile number"
                   />
                 </div>
+
+                {/* Email */}
                 <div>
                   <label className="block font-semibold mb-1">
                     Email Address *
@@ -392,7 +436,7 @@ const AdminStudentList = () => {
                   />
                 </div>
 
-                {/* Row 3: Profession & Address */}
+                {/* Profession */}
                 <div>
                   <label className="block font-semibold mb-1">Profession</label>
                   <input
@@ -404,6 +448,8 @@ const AdminStudentList = () => {
                     placeholder="Enter profession"
                   />
                 </div>
+
+                {/* Address */}
                 <div>
                   <label className="block font-semibold mb-1">
                     Full Address
@@ -418,7 +464,7 @@ const AdminStudentList = () => {
                   />
                 </div>
 
-                {/* Row 4: Membership & Start/End Dates */}
+                {/* Membership */}
                 <div>
                   <label className="block font-semibold mb-1">
                     Membership Category
@@ -435,6 +481,8 @@ const AdminStudentList = () => {
                     <option>Lifetime</option>
                   </select>
                 </div>
+
+                {/* Dates */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block font-semibold mb-1">
@@ -460,7 +508,7 @@ const AdminStudentList = () => {
                   </div>
                 </div>
 
-                {/* Row 5: Course & Batch */}
+                {/* Course */}
                 <div>
                   <label className="block font-semibold mb-1">Course *</label>
                   <select
@@ -475,6 +523,8 @@ const AdminStudentList = () => {
                     ))}
                   </select>
                 </div>
+
+                {/* Batch */}
                 <div>
                   <label className="block font-semibold mb-1">Batch</label>
                   <select
@@ -490,7 +540,7 @@ const AdminStudentList = () => {
                   </select>
                 </div>
 
-                {/* Submit Button */}
+                {/* Submit */}
                 <div className="col-span-2 flex justify-end pt-4 border-t mt-4">
                   <button
                     type="submit"
@@ -511,10 +561,12 @@ const AdminStudentList = () => {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
           }
+
           @keyframes slideDown {
             from { transform: translateY(-60px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
           }
+
           .animate-slideDown {
             animation: slideDown 0.35s ease-out;
           }

@@ -175,10 +175,26 @@ const Batch = () => {
             }}
             className="flex items-center bg-[#1B0138] text-white px-6 py-3 rounded-xl hover:bg-[#3a006b] shadow-lg"
           >
-            + Create New Batch
+            ➕ Create New Batch
           </button>
 
           <div className="relative w-60 max-w-xs">
+            {/* Search Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 transform -translate-y-1/2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116 10.5a7.5 7.5 0 01-9.9 9.9z"
+              />
+            </svg>
+
             <input
               type="text"
               placeholder="Search Batches.."

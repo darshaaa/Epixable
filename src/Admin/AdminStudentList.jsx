@@ -315,7 +315,7 @@ const AdminStudentList = () => {
                   >
                     <option>Active</option>
                     <option>Completed</option>
-                    <option>Upcoming</option>
+                    <option>Ongoing</option>
                   </select>
                 </div>
               </div>

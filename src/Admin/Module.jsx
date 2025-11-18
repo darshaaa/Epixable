@@ -1,294 +1,239 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaPlus, FaTimes, FaSearch, FaBookOpen, FaLayerGroup, FaCalendarAlt } from "react-icons/fa";
+import { FaPlus, FaTimes, FaSearch, FaBookOpen } from "react-icons/fa";
 import AdminSidebar from "./AdminSidebar";
 
-const Module = () => {
-  const [modules, setModules] = useState([]);
-  const [showCreatePopup, setShowCreatePopup] = useState(false);
-  const [showDetailPopup, setShowDetailPopup] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(null);
-  const [search, setSearch] = useState("");
+const Modules = () => {
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
-  const [name, setName] = useState("");
-  const [course, setCourse] = useState("");
-  const [batch, setBatch] = useState("");
-  const [description, setDescription] = useState("");
+  const [showModulePopup, setShowModulePopup] = useState(false);
+  const [showCreateModulePopup, setShowCreateModulePopup] = useState(false);
 
+  const [newModuleName, setNewModuleName] = useState("");
+  const [newModuleDescription, setNewModuleDescription] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // -------------------------------
+  // LOAD COURSES FROM LOCALSTORAGE
+  // -------------------------------
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("modules"));
-    if (saved && saved.length > 0) return setModules(saved);
-
-    const dummy = [
-      { id: 1, name: "HTML Basics", course: "Web Development", batch: "Batch A", description: "Introduction to HTML and Structure.", createdAt: "2025-02-10 10:30 AM" },
-      { id: 2, name: "CSS Flexbox", course: "Web Development", batch: "Batch B", description: "Design layouts using Flexbox.", createdAt: "2025-02-09 01:45 PM" },
-      { id: 3, name: "Wireframing", course: "UI/UX", batch: "Batch C", description: "Learn UX wireframe concepts.", createdAt: "2025-02-08 09:00 AM" },
-      { id: 4, name: "Python Loops", course: "Python", batch: "Batch A", description: "Master loops and conditions.", createdAt: "2025-02-07 03:20 PM" },
-      { id: 5, name: "Logo Designing", course: "Graphic Design", batch: "Batch B", description: "Logo creation principles.", createdAt: "2025-02-06 11:10 AM" },
-    ];
-
-    setModules(dummy);
-    localStorage.setItem("modules", JSON.stringify(dummy));
+    const stored = JSON.parse(localStorage.getItem("courses")) || [];
+    setCourses(stored);
   }, []);
 
-  const saveModules = (data) => {
-    setModules(data);
-    localStorage.setItem("modules", JSON.stringify(data));
+  // -------------------------------
+  // SAVE COURSES TO LOCALSTORAGE
+  // -------------------------------
+  const updateLocalStorage = (updated) => {
+    localStorage.setItem("courses", JSON.stringify(updated));
+    setCourses(updated);
   };
 
-  const handleSubmit = () => {
-    if (!name || !course || !batch || !description) return;
-
-    const newModule = {
-      id: Date.now(),
-      name,
-      course,
-      batch,
-      description,
-      createdAt: new Date().toLocaleString(),
-    };
-
-    const updated = [...modules, newModule];
-    saveModules(updated);
-
-    setShowCreatePopup(false);
-    setName("");
-    setCourse("");
-    setBatch("");
-    setDescription("");
+  // -------------------------------
+  // OPEN COURSE (SHOW MODULES PANEL)
+  // -------------------------------
+  const openCourseModules = (course) => {
+    setSelectedCourse(course);
+    setShowModulePopup(true);
   };
 
-  const deleteModule = (id) => {
-    const updated = modules.filter((m) => m.id !== id);
-    saveModules(updated);
-    setShowDetailPopup(false);
+  // -------------------------------
+  // ADD MODULE TO SPECIFIC COURSE
+  // -------------------------------
+  const addModule = () => {
+    if (!newModuleName.trim()) return;
+
+    const updatedCourses = courses.map((course) => {
+      if (course.id === selectedCourse.id) {
+        return {
+          ...course,
+          modules: [
+            ...(course.modules || []),
+            {
+              id: Date.now(),
+              name: newModuleName,
+              description: newModuleDescription,
+              createdAt: new Date().toISOString(),
+            },
+          ],
+        };
+      }
+      return course;
+    });
+
+    updateLocalStorage(updatedCourses);
+
+    // Clear inputs + close popup
+    setNewModuleName("");
+    setNewModuleDescription("");
+    setShowCreateModulePopup(false);
+
+    // Re-set selected course with fresh updated data
+    setSelectedCourse(
+      updatedCourses.find((c) => c.id === selectedCourse.id)
+    );
   };
 
-  const filteredModules = modules.filter((m) =>
-    m.name.toLowerCase().includes(search.toLowerCase()) ||
-    m.course.toLowerCase().includes(search.toLowerCase())
+  // -------------------------------
+  // FILTER COURSES BY SEARCH
+  // -------------------------------
+  const filteredCourses = courses.filter((course) =>
+    course.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="flex min-h-screen font-poppins bg-gray-300 overflow-hidden">
+    <div className="flex">
       <AdminSidebar />
 
-      <div className="flex-1 p-8 md:p-12 bg-gray-300 overflow-y-auto h-screen -mt-3">
-        <h1 className="text-4xl font-extrabold text-[#1B0138] mb-10 ">
-          🎓 Course Modules
-        </h1>
+      <div className="flex-1 p-6 bg-gray-300 min-h-screen">
+        {/* PAGE HEADER */}
+        <div className="flex justify-between items-center mb-6 mt-3">
+          <h1 className="text-3xl font-bold text-gray-800">🎓Modules</h1>
 
-
-
-        <div className="mt-12">
-          <div className="bg-white p-6 rounded-xl shadow-inner mt-23 ">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setShowCreatePopup(true)}
-            className="flex items-center gap-2 bg-[#1B0138] text-white px-8 py-3 rounded-xl shadow-xl font-semibold transition-all"
-          >
-            <FaPlus /> Create New Module
-          </motion.button>
-
-          <div className="relative w-full md:w-96">
-            <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          
+          <div className="relative w-72">
             <input
               type="text"
-              placeholder="Search module.."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-60 h-8 p-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1B0138] shadow-md"
+              placeholder="Search course..."
+              className="w-full px-4 py-2 rounded-lg border shadow-sm focus:ring focus:outline-none"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
+            <FaSearch className="absolute right-3 top-3 text-gray-500" />
           </div>
         </div>
 
-        {/* Module Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredModules.map((module) => (
+        {/* COURSE LIST */}
+        <div className="bg-white p-6 rounded-xl mt-25">
+            <div className="flex justify-between items-center mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCourses.map((course) => (
             <motion.div
-              key={module.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => {
-                setSelectedModule(module);
-                setShowDetailPopup(true);
-              }}
-              className="bg-white p-6 rounded-3xl border border-gray-300 cursor-pointer hover:border-[#1B0138]"
+              key={course.id}
+              whileHover={{ scale: 1.03 }}
+              className="p-5 rounded-xl  bg-white cursor-pointer border-l-4 border-r-1 border-[#1B0138]"
+              onClick={() => openCourseModules(course)}
             >
-              <div className="flex-grow">
-                <div className="bg-[#1B0138] text-white p-3 rounded-xl inline-block mb-4 shadow-lg">
-                  <FaBookOpen size={20} />
-                </div>
-                <h2 className="text-2xl font-bold text-[#1B0138] mb-3">
-                  {module.name}
-                </h2>
-                <p className="text-gray-600 line-clamp-2 mb-4">{module.description}</p>
+              <div className="flex items-center gap-3">
+                <FaBookOpen className="text-[#1B0138] text-xl" />
+                <h2 className="font-bold text-lg text-gray-900">{course.name}</h2>
               </div>
-
-              <div className="space-y-2 pt-4 border-t border-gray-100">
-                <p className="text-sm text-gray-700 flex items-center gap-2">
-                  <FaLayerGroup className="text-purple-500" />
-                  <span className="font-semibold">Course:</span> {module.course}
-                </p>
-                <p className="text-sm text-gray-700 flex items-center gap-2">
-                  <FaCalendarAlt className="text-pink-500" />
-                  <span className="font-semibold">Batch:</span> {module.batch}
-                </p>
-                <p className="text-xs text-gray-500 mt-2">
-                  Created on {new Date(module.createdAt).toLocaleDateString()}
-                </p>
-              </div>
+              <p className="text-gray-600 mt-2 text-sm">{course.description}</p>
+              <p className="mt-3 text-sm text-gray-700">
+                Modules: <strong>{course.modules?.length || 0}</strong>
+              </p>
             </motion.div>
           ))}
-
-          {filteredModules.length === 0 && (
-            <div className="text-gray-500 text-center col-span-full py-10">
-              No modules found matching "{search}".
-            </div>
-          )}
         </div>
         </div>
         </div>
 
-        {/* CREATE POPUP — RIGHT SLIDE */}
+        {/* RIGHT-SIDE MODULES POPUP */}
         <AnimatePresence>
-          {showCreatePopup && (
+          {showModulePopup && selectedCourse && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 flex justify-end items-center p-4 backdrop-blur-sm z-50"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 80 }}
+              className="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl p-6 overflow-y-auto z-50"
             >
-              <motion.div
-                initial={{ x: 300, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 300, opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-100"
+              {/* CLOSE BUTTON */}
+              <button
+                onClick={() => setShowModulePopup(false)}
+                className="absolute top-4 right-4 text-gray-600 hover:text-black"
               >
-                <div className="flex justify-between items-center mb-6 border-b pb-3">
-                  <h2 className="text-3xl font-extrabold text-[#1B0138]">Add New Module</h2>
-                  <FaTimes
-                    className="cursor-pointer text-gray-500 hover:text-red-500"
-                    onClick={() => setShowCreatePopup(false)}
-                    size={20}
-                  />
-                </div>
+                <FaTimes size={22} />
+              </button>
 
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Module Name"
-                    className="w-full p-4 border rounded-xl"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
+              {/* COURSE HEADER */}
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                {selectedCourse.name}
+              </h2>
+              <p className="text-gray-600 mb-4">{selectedCourse.description}</p>
 
-                  <select
-                    className="w-full p-4 border rounded-xl bg-white"
-                    value={course}
-                    onChange={(e) => setCourse(e.target.value)}
-                  >
-                    <option value="" disabled>Select Course</option>
-                    <option>Web Development</option>
-                    <option>UI/UX</option>
-                    <option>Python</option>
-                    <option>Graphic Design</option>
-                  </select>
+              {/* CREATE MODULE BUTTON */}
+              <button
+                onClick={() => setShowCreateModulePopup(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-[#1B0138] text-white rounded-lg shadow hover:bg-[#6A0DAD]"
+              >
+                <FaPlus /> Create Module
+              </button>
 
-                  <select
-                    className="w-full p-4 border rounded-xl bg-white"
-                    value={batch}
-                    onChange={(e) => setBatch(e.target.value)}
-                  >
-                    <option value="" disabled>Select Batch</option>
-                    <option>Batch A</option>
-                    <option>Batch B</option>
-                    <option>Batch C</option>
-                  </select>
-
-                  <textarea
-                    placeholder="Description"
-                    rows={4}
-                    className="w-full p-4 border rounded-xl"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-
-                  <button
-                    onClick={handleSubmit}
-                    className="w-full bg-green-600 text-white p-4 rounded-xl font-bold text-lg shadow-md"
-                  >
-                    Submit Module
-                  </button>
-                </div>
-              </motion.div>
+              {/* MODULE LIST (SCROLLABLE) */}
+              <div className="mt-5 max-h-[70vh] overflow-y-auto pr-2">
+                {selectedCourse.modules?.length > 0 ? (
+                  selectedCourse.modules.map((mod) => (
+                    <div
+                      key={mod.id}
+                      className="p-4 bg-gray-100 rounded-lg mb-3 shadow"
+                    >
+                      <h3 className="font-semibold text-gray-800">{mod.name}</h3>
+                      <p className="text-gray-600 text-sm mt-1">
+                        {mod.description}
+                      </p>
+                      <p className="text-gray-500 text-xs mt-2">
+                        Created: {new Date(mod.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500 mt-3">No modules created yet.</p>
+                )}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* DETAIL POPUP — RIGHT SLIDE */}
+        {/* CREATE MODULE SLIDE POPUP */}
         <AnimatePresence>
-          {showDetailPopup && selectedModule && (
+          {showCreateModulePopup && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 flex justify-end items-center p-4 backdrop-blur-sm z-50"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 80 }}
+              className="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl p-6 z-50"
             >
-              <motion.div
-                initial={{ x: 300, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 300, opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="bg-white w-full max-w-lg p-8 rounded-2xl shadow-2xl border border-gray-100"
+              {/* CLOSE */}
+              <button
+                onClick={() => setShowCreateModulePopup(false)}
+                className="absolute top-4 right-4 text-gray-600 hover:text-black"
               >
-                <div className="flex justify-between items-center mb-6 border-b pb-3">
-                  <h2 className="text-3xl font-extrabold text-[#1B0138]">Module Details</h2>
-                  <FaTimes
-                    className="cursor-pointer text-gray-500 hover:text-red-500"
-                    onClick={() => setShowDetailPopup(false)}
-                    size={20}
-                  />
-                </div>
+                <FaTimes size={22} />
+              </button>
 
-                <div className="space-y-4 text-gray-700">
-                  <p className="text-2xl font-bold text-[#1B0138]">{selectedModule.name}</p>
-                  <p className="border-b pb-4 text-gray-600 italic">{selectedModule.description}</p>
+              <h2 className="text-2xl font-bold mb-4">Create Module</h2>
 
-                  <p className="flex items-center gap-2">
-                    <FaLayerGroup className="text-purple-500" />
-                    <b>Course:</b> {selectedModule.course}
-                  </p>
+              <label className="text-gray-700">Module Name</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 mt-1 mb-3 border rounded"
+                value={newModuleName}
+                onChange={(e) => setNewModuleName(e.target.value)}
+              />
 
-                  <p className="flex items-center gap-2">
-                    <FaCalendarAlt className="text-pink-500" />
-                    <b>Batch:</b> {selectedModule.batch}
-                  </p>
+              <label className="text-gray-700">Description</label>
+              <textarea
+                className="w-full px-3 py-2 mt-1 border rounded"
+                rows="4"
+                value={newModuleDescription}
+                onChange={(e) => setNewModuleDescription(e.target.value)}
+              ></textarea>
 
-                  <p className="text-sm text-gray-500 pt-2 border-t">
-                    <b>Created At:</b> {selectedModule.createdAt}
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => deleteModule(selectedModule.id)}
-                  className="mt-8 w-full bg-red-600 text-white p-4 rounded-xl font-bold text-lg shadow-md"
-                >
-                  <FaTimes className="inline-block mr-2" /> Delete Module
-                </button>
-              </motion.div>
+              <button
+                onClick={addModule}
+                className="mt-4 w-full bg-blue-600 text-white py-2 rounded shadow hover:bg-blue-700"
+              >
+                Add Module
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </div>
   );
 };
 
-export default Module;
+export default Modules;

@@ -211,7 +211,7 @@ const AdminStudentList = () => {
                         className={`px-4 py-1 rounded-full text-white text-sm font-semibold shadow-md ${
                           student.status === "Active"
                             ? "bg-green-600"
-                            : "bg-red-500"
+                            : "bg-orange-500"
                             
                         }`}
                       >

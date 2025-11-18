@@ -146,8 +146,6 @@ const Attendance = () => {
       );
 
       setBatchDates(sortedDates);
-
-      // Default = latest date
       setSelectedDate(sortedDates[0] || "");
     }
   }, [selectedBatch]);
@@ -357,13 +355,12 @@ const Attendance = () => {
                   {selectedBatch} - Students
                 </h3>
 
-                {/* 🔥 Manual Date Input */}
+                {/* 🔥 Calendar Date Picker (only thing changed) */}
                 <input
-                  type="text"
-                  placeholder="YYYY-MM-DD"
+                  type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="border border-gray-300 bg-white px-3 py-2 rounded-lg text-sm font-semibold w-36"
+                  className="border border-gray-300 bg-white px-3 py-2 rounded-lg text-sm font-semibold w-40"
                 />
               </div>
 
@@ -371,9 +368,7 @@ const Attendance = () => {
               <div className="space-y-4">
                 {students
                   .filter((s) =>
-                    s.history.some(
-                      (h) => h.date === selectedDate.trim()
-                    )
+                    s.history.some((h) => h.date === selectedDate.trim())
                   )
                   .map((student, i) => (
                     <StudentCard

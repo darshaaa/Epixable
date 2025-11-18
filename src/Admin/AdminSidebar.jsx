@@ -21,11 +21,11 @@ const AdminSidebar = () => {
   const menuItems = [
     { name: "Dashboard", icon: <FaHome />, path: "/admin/dashboard" },
     { name: "Knowledge Materials", icon: <FaBook />, path: "/admin/materials" },
-    { name: "Attendance", icon: <FaClipboardList />, path: "/admin/attendance" },
     { name: "Recorded Videos", icon: <FaVideo />, path: "/admin/videos" },
     { name: "Courses", icon: <FaGraduationCap />, path: "/admin/courses" },
     { name: "Batch", icon: <FaUsers />, path: "/admin/batch" },
-    { name: "Module", icon: <FaClipboardList />, path: "/admin/module" },
+     { name: "Module", icon: <FaClipboardList />, path: "/admin/module" },
+    { name: "Attendance", icon: <FaClipboardList />, path: "/admin/attendance" },
   ];
 
   return (

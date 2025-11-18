@@ -23,7 +23,7 @@ const AdminStudentList = () => {
       course: "UI/UX Design",
       batch: "Batch B",
       expiry: "2025-12-15",
-      status: "Inactive",
+      status: "Completed",
     },
   ]);
 
@@ -212,6 +212,7 @@ const AdminStudentList = () => {
                           student.status === "Active"
                             ? "bg-green-600"
                             : "bg-red-500"
+                            
                         }`}
                       >
                         {student.status}
@@ -274,7 +275,8 @@ const AdminStudentList = () => {
                     className="w-full p-3 border rounded-lg shadow-sm"
                   >
                     <option>Active</option>
-                    <option>Inactive</option>
+                    <option>Completed</option>
+                    <option>Upcoming</option>
                   </select>
                 </div>
               </div>

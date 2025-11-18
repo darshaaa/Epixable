@@ -273,7 +273,7 @@ const Attendance = () => {
             <div className="bg-[#1B0138] p-3 rounded-xl text-white">
               <FaClipboardList size={20} />
             </div>
-            <h1 className="text-4xl font-extrabold text-[#1B0138]">
+            <h1 className="text-4xl  font-bold text-[#1B0138]">
               Attendance Dashboard
             </h1>
           </div>

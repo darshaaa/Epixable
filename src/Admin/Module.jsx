@@ -89,7 +89,7 @@ const Modules = () => {
       <div className="flex-1 p-6 bg-gray-300 min-h-screen">
         {/* PAGE HEADER */}
         <div className="flex justify-between items-center mb-6 mt-3">
-          <h1 className="text-3xl font-bold text-gray-800">🎓Modules</h1>
+          <h1 className="text-3xl font-bold text-[#1B0138]">🎓Modules</h1>
 
           
           <div className="relative w-72">

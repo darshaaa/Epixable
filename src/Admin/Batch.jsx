@@ -161,7 +161,7 @@ const Batch = () => {
           <span className="text-3xl bg-[#1B0138] text-white p-3 rounded-xl">
             🎓
           </span>
-          <h1 className="text-4xl font-extrabold text-[#1B0138]">
+          <h1 className="text-4xl  font-bold text-[#1B0138]">
             Batch Management
           </h1>
         </div>

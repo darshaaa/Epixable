@@ -76,7 +76,7 @@ const KnowledgeMaterials = () => {
           <div className="bg-[#1B0138] p-3 rounded-xl text-white inline-flex items-center justify-center">
             <FaBook size={20} />
           </div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-900">
             Knowledge Materials
           </h1>
         </div>

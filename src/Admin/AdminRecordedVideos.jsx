@@ -46,7 +46,7 @@ const AdminRecordedVideos = () => {
 
       {/* Main content scrolls independently */}
       <div className="flex-1 p-8 lg:p-12 overflow-y-auto scrollbar-thin scrollbar-thumb-[#2E0057]/50 scrollbar-track-[#EDE7F6]/40 -mt-3">
-        <h1 className="text-4xl font-extrabold text-[#2E0057] mb-8 flex items-center">
+        <h1 className="text-4xl font-bold text-[#2E0057] mb-8 flex items-center">
           <FaVideo className="text-3xl mr-3 text-[#2E0057]" />
           Recorded Content Hub
         </h1>
@@ -98,7 +98,7 @@ const AdminRecordedVideos = () => {
 
             <button
               type="submit"
-              className="w-full bg-[#2E0057] text-white font-bold py-3 rounded-xl hover:bg-[#FF0080] transition duration-300 shadow-lg hover:shadow-2xl transform hover:scale-[1.02]"
+              className="w-full bg-[#2d1244] text-white font-bold py-3 rounded-xl hover:bg-[#30015f] transition duration-300 shadow-lg hover:shadow-2xl transform hover:scale-[1.02]"
             >
               <FaUpload className="inline mr-2" /> Publish Video
             </button>

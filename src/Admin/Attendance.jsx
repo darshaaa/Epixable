@@ -264,12 +264,12 @@ const Attendance = () => {
 
   return (
     <>
-      <div className="flex min-h-screen bg-[#F7F7F7] font-poppins overflow-hidden">
+      <div className="flex min-h-screen bg-gray-300 font-poppins overflow-hidden">
         <AdminSidebar />
 
         <div className="flex-1 p-4 sm:p-8 overflow-y-auto h-screen">
           {/* Header */}
-          <div className="mb-6 flex items-center gap-4 mt-9">
+          <div className="mb-6 flex items-center gap-4 mt-2">
             <div className="bg-[#1B0138] p-3 rounded-xl text-white">
               <FaClipboardList size={20} />
             </div>
@@ -292,7 +292,7 @@ const Attendance = () => {
             )}
           </AnimatePresence>
 
-          <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] rounded-2xl p-6 sm:p-8 shadow-xl ">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 mt-21">
             {/* Select batch */}
             <div className="flex justify-start mb-6">
               <button

@@ -125,19 +125,19 @@ const Courses = () => {
   );
 
   return (
-    <div className="flex h-screen bg-white font-poppins">
+    <div className="flex h-screen bg-gray-300 font-poppins">
       <AdminSidebar />
 
       <div className="flex-1 p-8 h-full overflow-y-auto scroll-smooth">
-        <div className="flex items-center gap-4 my-6">
-          <div className="bg-[#1B0138] p-3 rounded-xl text-white flex items-center justify-center">
+        <div className="flex items-center gap-4 my-6 mt-1">
+          <div className="bg-[#1B0138] p-3 rounded-xl text-white flex items-center justify-center ">
             <span className="text-xl">🎓</span>
           </div>
           <h1 className="text-3xl font-bold text-[#1B0138]">Courses</h1>
         </div>
 
-        <div className="mt-12">
-          <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] p-6 rounded-xl shadow-inner ">
+        <div className="mt-21">
+          <div className="bg-white p-6 rounded-xl">
             <div className="flex justify-between items-center mb-10">
               <button
                 onClick={() => setShowForm(true)}
@@ -183,7 +183,7 @@ const Courses = () => {
                       setShowOverview(true);
                     }}
                     className={`relative group cursor-pointer h-56 p-6 rounded-xl shadow-xl transition-all duration-300 bg-white
-                border border-gray-500 hover:scale-105 hover:border-2 hover:border-[#52057B] hover:shadow-2xl`}
+                border border-gray-300 hover:scale-105 hover:border-2 hover:border-[#52057B] hover:shadow-2xl`}
                   >
                     <div
                       className={`absolute top-4 left-4 w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 group-hover:bg-white transition-colors duration-300`}

@@ -70,14 +70,18 @@ const Module = () => {
   );
 
   return (
-    <div className="flex min-h-screen font-poppins bg-[#F5F6FA] overflow-hidden">
+    <div className="flex min-h-screen font-poppins bg-gray-300 overflow-hidden">
       <AdminSidebar />
 
-      <div className="flex-1 p-8 md:p-12 bg-gray-50 overflow-y-auto h-screen">
-        <h1 className="text-4xl font-extrabold text-[#1B0138] mb-10 border-b pb-4">
+      <div className="flex-1 p-8 md:p-12 bg-gray-300 overflow-y-auto h-screen -mt-3">
+        <h1 className="text-4xl font-extrabold text-[#1B0138] mb-10 ">
           🎓 Course Modules
         </h1>
 
+
+
+        <div className="mt-12">
+          <div className="bg-white p-6 rounded-xl shadow-inner mt-23 ">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -113,7 +117,7 @@ const Module = () => {
                 setSelectedModule(module);
                 setShowDetailPopup(true);
               }}
-              className="bg-white p-6 rounded-3xl shadow-lg border border-gray-500 cursor-pointer hover:border-[#1B0138]"
+              className="bg-white p-6 rounded-3xl border border-gray-300 cursor-pointer hover:border-[#1B0138]"
             >
               <div className="flex-grow">
                 <div className="bg-[#1B0138] text-white p-3 rounded-xl inline-block mb-4 shadow-lg">
@@ -146,6 +150,8 @@ const Module = () => {
               No modules found matching "{search}".
             </div>
           )}
+        </div>
+        </div>
         </div>
 
         {/* CREATE POPUP — RIGHT SLIDE */}

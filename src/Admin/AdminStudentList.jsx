@@ -152,12 +152,12 @@ const AdminStudentList = () => {
   });
 
   return (
-    <div className="flex min-h-screen bg-[#F7F7F7] font-poppins">
+    <div className="flex min-h-screen bg-gray-300 font-poppins">
       <AdminSidebar />
 
       <div className="flex-1 p-10 relative overflow-hidden max-w-full">
         {/* Page Title with Icon */}
-        <div className="flex items-center gap-3 mb-10 mt-10">
+        <div className="flex items-center gap-3 mb-10 -mt-0">
           <span className="text-3xl bg-[#1B0138] text-white p-3 rounded-xl">
             👨‍🎓
           </span>
@@ -166,7 +166,7 @@ const AdminStudentList = () => {
           </h1>
         </div>
 
-        <div className="bg-gradient-to-br from-[#FFFFFF] to-[#7a6592] p-6 rounded-2xl shadow-xl">
+        <div className="bg-white p-6 rounded-2xl mt-18">
           {/* TOP BAR (Search + Date Filter + Add Student) */}
           <div className="flex justify-between items-center mb-4 pb-3">
             <h2 className="text-xl font-semibold text-gray-800">

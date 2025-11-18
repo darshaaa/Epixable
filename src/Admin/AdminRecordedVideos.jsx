@@ -38,21 +38,21 @@ const AdminRecordedVideos = () => {
   };
 
   return (
-    <div className="flex bg-gradient-to-br from-[#f5f3fa] to-[#e0d9f8] min-h-screen">
+    <div className="flex bg-gray-300  min-h-screen">
       {/* Sidebar stays fixed */}
       <div className="flex-shrink-0 sticky top-0 h-screen">
         <AdminSidebar />
       </div>
 
       {/* Main content scrolls independently */}
-      <div className="flex-1 p-8 lg:p-12 overflow-y-auto scrollbar-thin scrollbar-thumb-[#2E0057]/50 scrollbar-track-[#EDE7F6]/40">
+      <div className="flex-1 p-8 lg:p-12 overflow-y-auto scrollbar-thin scrollbar-thumb-[#2E0057]/50 scrollbar-track-[#EDE7F6]/40 -mt-3">
         <h1 className="text-4xl font-extrabold text-[#2E0057] mb-8 flex items-center">
-          <FaVideo className="text-3xl mr-3 text-[#FF0080]" />
+          <FaVideo className="text-3xl mr-3 text-[#2E0057]" />
           Recorded Content Hub
         </h1>
 
         {/* Upload Form */}
-        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 w-full max-w-2xl mb-12">
+        <div className="bg-white rounded-3xl  border border-gray-100 p-8 w-full max-w-2xl mb-12 mt-22">
           <h2 className="text-2xl font-bold text-[#2E0057] mb-6 border-b pb-3 flex items-center">
             <FaUpload className="mr-2 text-xl" /> Upload New Video
           </h2>
@@ -112,7 +112,7 @@ const AdminRecordedVideos = () => {
           </h2>
 
           {videos.length === 0 ? (
-            <div className="bg-white p-6 rounded-xl shadow-inner text-center">
+            <div className="bg-white p-6 rounded-xl  text-center">
               <p className="text-gray-500 text-lg font-medium">
                 🚀 Ready to upload your first video? Use the form above!
               </p>

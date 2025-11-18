@@ -27,22 +27,22 @@ const AdminDashboard = () => {
       <AdminSidebar />
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
-        <h2 className="text-2xl font-semibold text-black mb-4">Welcome</h2>
-        <h1 className="text-3xl font-bold text-black mb-6">
+      <div className="flex-1 p-4">
+        <h2 className="text-xl font-medium text-black mt-4 pl-13">Welcome</h2>
+        <h1 className="text-3xl font-bold text-black mb-1 pl-13 ">
           Admin - Dashboard
         </h1>
 
         {/* Welcome Section */}
-        <div className="bg-[#2E0057] pl-15 p-6 rounded-2xl shadow-md flex justify-between items-center mb-8 mt-20 min-h-[220px] w-full">
+        <div className="bg-[#2E0057] pl-15 p-6 rounded-2xl  shadow-md flex justify-between items-center mb-8 mt-18 min-h-[220px] w-full">
           <div>
-            <h3 className="text-2xl font-semibold text-white mb-8">
+            <h3 className="text-xl font-medium text-white ">
               Welcome, Mr. Admin!
             </h3>
-            <p className="text-5xl font-bold text-white mt-3">
+            <p className="text-[80px] font-bold text-white -mt-5 -ml-2">
               {formattedTime}
             </p>
-            <p className="text-white mt-2 pl-2">{formattedDate}</p>
+            <p className="text-white -mt-2 -ml-0">{formattedDate}</p>
           </div>
         </div>
 
@@ -51,33 +51,33 @@ const AdminDashboard = () => {
           {/* Join Session - First Card */}
           <div className="bg-[#FFF500] p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:scale-105 flex flex-col items-start text-left">
             {/* Transparent background circle */}
-            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl">
-              <FaVideo className="text-black text-3xl" />
+            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl ml-5">
+              <FaVideo className="text-black text-3xl " />
             </div>
-            <h4 className="text-2xl font-bold text-black mb-3">Join Session</h4>
-            <p className="text-lg text-black">via invitation link</p>
+            <h4 className="text-2xl font-bold text-black mb-2 ml-8">Join Session</h4>
+            <p className="text-lg text-black ml-8">via invitation link</p>
           </div>
 
           {/* Upcoming Meetings */}
           <div className="bg-[#2043FF] p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:scale-105 flex flex-col items-start text-left">
-            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl">
+            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl ml-3">
               <FaCalendarAlt className="text-white text-3xl" />
             </div>
-            <h4 className="text-2xl font-bold text-white mb-3">
+            <h4 className="text-2xl font-bold text-white mb-3 ml-8">
               Upcoming Session
             </h4>
-            <p className="text-lg text-white">View upcoming meetings</p>
+            <p className="text-lg text-white ml-8">View upcoming meetings</p>
           </div>
 
           {/* Latest Update */}
           <div className="bg-[#FF0080] p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:scale-105 flex flex-col items-start text-left">
-            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl">
+            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl ml-3">
               <FaBell className="text-white text-3xl" />
             </div>
-            <h4 className="text-2xl font-bold text-white mb-3">
+            <h4 className="text-2xl font-bold text-white mb-3 ml-8">
               Latest Update
             </h4>
-            <p className="text-lg text-white">View latest news updates</p>
+            <p className="text-lg text-white ml-8">View latest news updates</p>
           </div>
         </div>
       </div>

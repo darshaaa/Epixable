@@ -26,6 +26,7 @@ const AdminSidebar = () => {
     { name: "Batch", icon: <FaUsers />, path: "/admin/batch" },
      { name: "Module", icon: <FaClipboardList />, path: "/admin/module" },
     { name: "Attendance", icon: <FaClipboardList />, path: "/admin/attendance" },
+
   ];
 
   return (

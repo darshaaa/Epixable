@@ -152,11 +152,11 @@ const Batch = () => {
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return (
-    <div className="flex min-h-screen bg-[#F7F7F7] font-poppins overflow-hidden">
+    <div className="flex min-h-screen bg-gray-300 font-poppins overflow-hidden">
       <AdminSidebar />
 
       {/* Make only this div scroll */}
-      <div className="flex-1 p-8 relative overflow-y-auto h-screen">
+      <div className="flex-1 p-8 relative overflow-y-auto h-screen -mt-9">
         <div className="flex items-center gap-3 mb-6 mt-10">
           <span className="text-3xl bg-[#1B0138] text-white p-3 rounded-xl">
             🎓
@@ -167,6 +167,8 @@ const Batch = () => {
         </div>
 
         {/* top bar */}
+        <div className="mt-12">
+          <div className="bg-white p-6 rounded-xl mt-19 ">
         <div className="flex justify-between items-center mb-10">
           <button
             onClick={() => {
@@ -210,7 +212,7 @@ const Batch = () => {
           {filteredBatches.map((batch) => (
             <div
               key={batch.id}
-              className="bg-white shadow-lg rounded-2xl p-6 border border-gray-400 hover:shadow-2xl transition-transform duration-200 hover:scale-[1.02]"
+              className="bg-white shadow-lg rounded-2xl p-6 border border-gray-300 hover:shadow-2xl transition-transform duration-200 hover:scale-[1.02]"
             >
               <h2 className="text-xl font-bold text-[#1B0138] mb-3">
                 {batch.batchName}
@@ -248,6 +250,8 @@ const Batch = () => {
               </div>
             </div>
           ))}
+        </div>
+        </div>
         </div>
 
         {/* POPUP */}

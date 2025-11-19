@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaSearch, FaTrash, FaTimes, FaBook } from "react-icons/fa"; // Added FaBook as logo
+import { FaSearch, FaTrash, FaTimes, FaBook } from "react-icons/fa";
 import AdminSidebar from "./AdminSidebar";
 
 const KnowledgeMaterials = () => {
@@ -9,6 +9,9 @@ const KnowledgeMaterials = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedModule, setSelectedModule] = useState("");
+
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
 
   const courses = ["B.Com", "BBA", "MBA"];
   const modules = ["Module 1", "Module 2", "Module 3", "Module 4"];
@@ -57,9 +60,21 @@ const KnowledgeMaterials = () => {
     document.getElementById("fileInput").value = "";
   };
 
-  const handleDelete = (index) => {
-    const updated = materials.filter((_, i) => i !== index);
+  const openDeletePopup = (index) => {
+    setDeleteIndex(index);
+    setShowDeletePopup(true);
+  };
+
+  const confirmDelete = () => {
+    const updated = materials.filter((_, i) => i !== deleteIndex);
     setMaterials(updated);
+    setShowDeletePopup(false);
+    setDeleteIndex(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeletePopup(false);
+    setDeleteIndex(null);
   };
 
   const filtered = materials.filter((m) =>
@@ -67,23 +82,22 @@ const KnowledgeMaterials = () => {
   );
 
   return (
-    <div className="flex min-h-screen bg-gray-300 relative overflow-hidden">
+    <div className="flex min-h-screen bg-gray-200 relative overflow-hidden">
       <AdminSidebar />
 
-      <div className="flex-1 min-h-screen p-8 ">
-        {/* Page Header with Logo */}
+      <div className="flex-1 min-h-screen p-8">
+        {/* Header */}
         <div className="mb-6 flex items-center gap-4 mt-3">
           <div className="bg-[#1B0138] p-3 rounded-xl text-white inline-flex items-center justify-center">
             <FaBook size={20} />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900">
             Knowledge Materials
           </h1>
         </div>
 
-        {/* Upload & Search Section */}
-        <div className="bg-white rounded-2xl p-8  relative mt-21 border border-gray-100">
-
+        {/* Upload + Search */}
+        <div className="bg-white rounded-2xl p-8 border border-gray-100">
           <div className="flex justify-between items-center mb-8">
             <input
               id="fileInput"
@@ -92,6 +106,7 @@ const KnowledgeMaterials = () => {
               onChange={handleFileChange}
               className="hidden"
             />
+
             <button
               onClick={handleUploadClick}
               className="ml-8 bg-[#1B0138] hover:bg-[#30015f] text-white font-semibold px-6 py-3 rounded-2xl shadow-md transition-all duration-200"
@@ -99,14 +114,14 @@ const KnowledgeMaterials = () => {
               + Upload Files
             </button>
 
-            <div className="relative w-80 ml-auto">
+            <div className="relative w-55 ml-auto">
               <FaSearch className="absolute left-4 top-3 text-gray-500" />
               <input
                 type="text"
                 placeholder="Search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-[#e3ece8]  rounded-full pl-10 pr-4 py-2 text-sm outline-none placeholder:text-gray-500"
+                className="w-full bg-[#e3ece8] rounded-full pl-10 pr-4 py-2 text-sm outline-none placeholder:text-gray-500"
               />
             </div>
           </div>
@@ -128,19 +143,18 @@ const KnowledgeMaterials = () => {
                 key={i}
                 className="grid grid-cols-4 items-center border-b border-gray-200 py-3 text-[15px] pl-10"
               >
-                <p
-                  className="text-black font-medium truncate max-w-[230px]"
-                  title={item.name}
-                >
+                <p className="text-black font-medium truncate max-w-[230px]">
                   {item.name}
                 </p>
                 <p className="text-gray-700">{item.course}</p>
                 <p className="text-gray-700">{item.module}</p>
+
                 <div className="flex items-center justify-end gap-4 pr-15">
                   <span className="text-black">{item.date}</span>
+
                   <FaTrash
                     className="text-red-500 cursor-pointer hover:scale-110 transition"
-                    onClick={() => handleDelete(i)}
+                    onClick={() => openDeletePopup(i)}
                   />
                 </div>
               </div>
@@ -148,9 +162,10 @@ const KnowledgeMaterials = () => {
           )}
         </div>
 
+        {/* Upload Details Popup */}
         {showPopup && (
           <div
-            className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-lg p-6 w-[380px] border border-gray-200 animate-slideDown z-50`}
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-lg p-6 w-[380px] border border-gray-200 animate-slideDown z-50"
           >
             <div className="flex justify-between items-center mb-3">
               <h2 className="text-lg font-bold text-black">
@@ -206,6 +221,36 @@ const KnowledgeMaterials = () => {
             >
               Upload
             </button>
+          </div>
+        )}
+
+        {/* Delete Confirmation Popup (TRANSPARENT BACKGROUND) */}
+        {showDeletePopup && (
+          <div className="fixed inset-0 flex justify-center items-center z-50 pointer-events-none">
+            <div className="pointer-events-auto bg-white border border-gray-300 shadow-xl rounded-xl p-6 w-[350px] text-center">
+              <h2 className="text-lg font-bold text-gray-800 mb-3">
+                Confirm Delete
+              </h2>
+              <p className="text-gray-600 mb-5">
+                Are you sure you want to delete this file?
+              </p>
+
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={cancelDelete}
+                  className="px-4 py-2 rounded-lg border border-gray-400 text-gray-700 hover:bg-gray-200"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={confirmDelete}
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

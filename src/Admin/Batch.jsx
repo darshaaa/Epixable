@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "./AdminSidebar";
+import { FaSearch } from "react-icons/fa";
+
 
 const Batch = () => {
   const [batches, setBatches] = useState([
@@ -56,10 +58,9 @@ const Batch = () => {
     createdAt: "",
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {}, 100);
-    return () => clearTimeout(timer);
-  }, [batches]);
+  // DELETE CONFIRM POPUP STATE
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   const generateTimes = () => {
     const times = [];
@@ -75,6 +76,15 @@ const Batch = () => {
   };
 
   const timeOptions = generateTimes();
+
+  const getIcon = (course) => {
+    if (course === "React Basics") return "⚛️";
+    if (course === "Node.js Mastery") return "⚡";
+    if (course === "Full Stack Development") return "💼";
+    if (course === "Python for Beginners") return "🐍";
+    if (course === "Data Analytics Bootcamp") return "📊";
+    return "🎓";
+  };
 
   const handleCreateBatch = (e) => {
     e.preventDefault();
@@ -135,10 +145,17 @@ const Batch = () => {
     setShowForm(true);
   };
 
+  // OPEN CONFIRM POPUP
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this batch?")) {
-      setBatches(batches.filter((b) => b.id !== id));
-    }
+    setDeleteId(id);
+    setShowDeleteConfirm(true);
+  };
+
+  // CONFIRM DELETE
+  const confirmDelete = () => {
+    setBatches(batches.filter((b) => b.id !== deleteId));
+    setShowDeleteConfirm(false);
+    setDeleteId(null);
   };
 
   const filteredBatches = batches
@@ -155,109 +172,107 @@ const Batch = () => {
     <div className="flex min-h-screen bg-gray-300 font-poppins overflow-hidden">
       <AdminSidebar />
 
-      {/* Make only this div scroll */}
       <div className="flex-1 p-8 relative overflow-y-auto h-screen -mt-9">
         <div className="flex items-center gap-3 mb-6 mt-10">
-          <span className="text-3xl bg-[#1B0138] text-white p-3 rounded-xl">
+          <span className="text-2xl bg-[#1B0138] text-white p-3 rounded-xl">
             🎓
           </span>
-          <h1 className="text-4xl  font-bold text-[#1B0138]">
+          <h1 className="text-2xl font-bold text-[#1B0138]">
             Batch Management
           </h1>
         </div>
 
-        {/* top bar */}
+        {/* SEARCH & CREATE */}
         <div className="mt-12">
-          <div className="bg-white p-6 rounded-xl mt-19 ">
-        <div className="flex justify-between items-center mb-10">
-          <button
-            onClick={() => {
-              if (editingBatch) setEditingBatch(null);
-              setShowForm(true);
-            }}
-            className="flex items-center bg-[#1B0138] text-white px-6 py-3 rounded-xl hover:bg-[#3a006b] shadow-lg"
-          >
-            ➕ Create New Batch
-          </button>
+          <div className="bg-white p-6 rounded-xl mt-19">
+            <div className="flex justify-between items-center mb-10">
+              <button
+                onClick={() => {
+                  if (editingBatch) setEditingBatch(null);
+                  setShowForm(true);
+                }}
+                className="flex items-center bg-[#1B0138] text-white px-6 py-3 rounded-xl hover:bg-[#3a006b] shadow-lg"
+              >
+                ➕ Create New Batch
+              </button>
 
-          <div className="relative w-60 max-w-xs">
-            {/* Search Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 transform -translate-y-1/2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116 10.5a7.5 7.5 0 01-9.9 9.9z"
-              />
-            </svg>
+              <div className="relative w-60 max-w-xs">
+                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg" />
 
-            <input
-              type="text"
-              placeholder="Search Batches.."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full h-8 p-3 pl-12 border border-gray-300 rounded-xl bg-white"
-            />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full h-9 pl-10 pr-3 border border-gray-300 rounded-xl bg-[#e3ece8] focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* BATCH CARDS */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
+              {filteredBatches.map((batch) => (
+                <div
+                  key={batch.id}
+                  className="relative bg-white rounded-2xl p-6 border border-gray-300 transition-all duration-200 hover:scale-[1.02] group hover:bg-orange-600"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 group-hover:bg-white transition">
+                      <span className="text-2xl group-hover:text-orange-600">
+                        {getIcon(batch.course)}
+                      </span>
+                    </div>
+
+                    <h2 className="text-xl font-bold text-[#1B0138] group-hover:text-white">
+                      {batch.batchName}
+                    </h2>
+                  </div>
+
+                  <p className="text-gray-700 group-hover:text-white">
+                    <strong>Batch No:</strong> {batch.batchNo}
+                  </p>
+
+                  <p className="text-gray-700 mt-1 group-hover:text-white">
+                    <strong>Course:</strong> {batch.course}
+                  </p>
+
+                  <p className="text-gray-700 mt-1 group-hover:text-white">
+                    <strong>Timing:</strong> {batch.batchTiming}
+                  </p>
+
+                  <p className="text-gray-700 mt-1 group-hover:text-white">
+                    <strong>Date:</strong> {batch.createdAt}
+                  </p>
+
+                  <p className="text-gray-700 mt-1 group-hover:text-white">
+                    <strong>Students:</strong> {batch.studentsCount}
+                  </p>
+
+                  <div className="flex justify-between mt-5">
+                    <button
+                      onClick={() => handleEdit(batch)}
+                      className="px-4 py-2 bg-[#1B0138] text-white rounded-lg group-hover:bg-white group-hover:text-orange-500"
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(batch.id)}
+                      className="px-4 py-2 bg-red-500 text-white rounded-lg group-hover:bg-white group-hover:text-orange-500"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* CARD GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
-          {filteredBatches.map((batch) => (
-            <div
-              key={batch.id}
-              className="bg-white shadow-lg rounded-2xl p-6 border border-gray-300 hover:shadow-2xl transition-transform duration-200 hover:scale-[1.02]"
-            >
-              <h2 className="text-xl font-bold text-[#1B0138] mb-3">
-                {batch.batchName}
-              </h2>
-
-              <p className="text-gray-700">
-                <strong>Batch No:</strong> {batch.batchNo}
-              </p>
-              <p className="text-gray-700 mt-1">
-                <strong>Course:</strong> {batch.course}
-              </p>
-              <p className="text-gray-700 mt-1">
-                <strong>Timing:</strong> {batch.batchTiming}
-              </p>
-              <p className="text-gray-700 mt-1">
-                <strong>Date:</strong> {batch.createdAt}
-              </p>
-              <p className="text-gray-700 mt-1">
-                <strong>Students:</strong> {batch.studentsCount}
-              </p>
-
-              <div className="flex justify-between mt-5">
-                <button
-                  onClick={() => handleEdit(batch)}
-                  className="px-4 py-2 bg-[#1B0138] text-white rounded-lg"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(batch.id)}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-        </div>
-        </div>
-
-        {/* POPUP */}
+        {/* FORM POPUP (unchanged) */}
         {showForm && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-end z-50">
-            <div className="bg-white p-8 rounded-l-3xl shadow-2xl w-full max-w-md animate-slideFromRight border-l-4 border-[#1B0138]">
+            <div className="bg-white p-8 rounded-l-3xl w-full max-w-md animate-slideFromRight border-1">
               <h2 className="text-2xl font-bold text-[#1B0138] text-center mb-6 border-b pb-3">
                 {editingBatch ? "Edit Batch" : "Create New Batch"}
               </h2>
@@ -390,10 +405,47 @@ const Batch = () => {
           </div>
         )}
 
+        {/* 🚨 DELETE CONFIRMATION POPUP */}
+        {showDeleteConfirm && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-xl w-80 shadow-xl animate-fadeIn">
+              <h3 className="text-xl font-bold mb-4 text-center text-red-600">
+                Confirm Delete
+              </h3>
+              <p className="text-center mb-6 text-gray-700">
+                Are you sure you want to delete this batch?
+              </p>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setShowDeleteConfirm(false)}
+                  className="w-1/2 bg-gray-300 py-2 rounded-lg"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  className="w-1/2 bg-red-500 text-white py-2 rounded-lg"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+          }
+          .animate-fadeIn {
+            animation: fadeIn .25s ease-out forwards;
+          }
+
           @keyframes slideFromRight {
             from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1); }
+            to { transform: translateX(0); opacity: 1; }
           }
           .animate-slideFromRight {
             animation: slideFromRight 0.5s ease-out forwards;

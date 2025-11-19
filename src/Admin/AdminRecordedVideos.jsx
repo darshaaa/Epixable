@@ -46,7 +46,7 @@ const AdminRecordedVideos = () => {
 
       {/* Main content scrolls independently */}
       <div className="flex-1 p-8 lg:p-12 overflow-y-auto scrollbar-thin scrollbar-thumb-[#2E0057]/50 scrollbar-track-[#EDE7F6]/40 -mt-3">
-        <h1 className="text-4xl font-bold text-[#2E0057] mb-8 flex items-center">
+        <h1 className="text-2xl font-bold text-[#2E0057] mb-8 flex items-center">
           <FaVideo className="text-3xl mr-3 text-[#2E0057]" />
           Recorded Content Hub
         </h1>

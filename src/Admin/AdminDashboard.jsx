@@ -36,13 +36,13 @@ const AdminDashboard = () => {
         {/* Welcome Section */}
         <div className="bg-[#2E0057] pl-15 p-6 rounded-2xl  shadow-md flex justify-between items-center mb-8 mt-18 min-h-[220px] w-full">
           <div>
-            <h3 className="text-xl font-medium text-white ">
+            <h3 className="text-xl font-medium text-white -ml-1">
               Welcome, Mr. Admin!
             </h3>
-            <p className="text-[80px] font-bold text-white -mt-5 -ml-2">
+            <p className="text-[80px] font-bold text-white -mt-2 -ml-2">
               {formattedTime}
             </p>
-            <p className="text-white -mt-2 -ml-0">{formattedDate}</p>
+            <p className="text-white -mt-5 -ml-1">{formattedDate}</p>
           </div>
         </div>
 
@@ -51,11 +51,11 @@ const AdminDashboard = () => {
           {/* Join Session - First Card */}
           <div className="bg-[#FFF500] p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:scale-105 flex flex-col items-start text-left">
             {/* Transparent background circle */}
-            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl ml-5">
+            <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl ml-3">
               <FaVideo className="text-black text-3xl " />
             </div>
-            <h4 className="text-2xl font-bold text-black mb-2 ml-8">Join Session</h4>
-            <p className="text-lg text-black ml-8">via invitation link</p>
+            <h4 className="text-2xl font-bold text-black mb-0 ml-6">Join Session</h4>
+            <p className="text-lg text-black ml-6">via invitation link</p>
           </div>
 
           {/* Upcoming Meetings */}
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
             <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl ml-3">
               <FaCalendarAlt className="text-white text-3xl" />
             </div>
-            <h4 className="text-2xl font-bold text-white mb-3 ml-8">
+            <h4 className="text-2xl font-bold text-white mb-0 ml-8">
               Upcoming Session
             </h4>
             <p className="text-lg text-white ml-8">View upcoming meetings</p>
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
             <div className="w-16 h-16 flex items-center justify-center mb-4 rounded-2xl ml-3">
               <FaBell className="text-white text-3xl" />
             </div>
-            <h4 className="text-2xl font-bold text-white mb-3 ml-8">
+            <h4 className="text-2xl font-bold text-white mb-0 ml-8">
               Latest Update
             </h4>
             <p className="text-lg text-white ml-8">View latest news updates</p>

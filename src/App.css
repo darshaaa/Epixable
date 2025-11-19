@@ -1,6 +1,27 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+/* Apply Poppins everywhere */
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Body text */
+.body-text {
+  font-weight: 400 !important;
+}
+
+/* Headings */
+.heading-bold {
+  font-weight: 700 !important;
+}
+
+/* Sidebar text */
+.sidebar-bold {
+  font-weight: 600 !important;
+}
+
+/* Table text */
+.table-bold {
+  font-weight: 500 !important;
 }
